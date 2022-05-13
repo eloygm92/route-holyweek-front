@@ -1,8 +1,10 @@
 <template>
-  <h1>Dashboard</h1>
+  <Navbar />
 </template>
 
 <script setup>
+
+import Navbar from "./Navbar";
 
 </script>
 
