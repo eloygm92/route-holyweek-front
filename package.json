@@ -8,6 +8,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "element-plus": "^2.2.0",
+    "unplugin-auto-import": "^0.7.1",
+    "unplugin-vue-components": "^0.19.5",
     "vue": "^3.2.25",
     "vue-router": "^4.0.14",
     "vue3-cookies": "^1.0.6"

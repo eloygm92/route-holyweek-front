@@ -1,11 +1,10 @@
 <template>
-  <CheckPermission />
-  <h1>Dashboard</h1>
+  <Navbar />
 </template>
 
 <script setup>
 
-import CheckPermission from "./CheckPermission";
+import Navbar from "./Navbar";
 
 </script>
 
