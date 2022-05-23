@@ -1,11 +1,9 @@
 <template>
-  <Navbar />
+
 </template>
 
 <script setup>
-
-import Navbar from "./Navbar";
-
+  // Todo: Tarjetas con diferentes cosas
 </script>
 
 <style scoped>
