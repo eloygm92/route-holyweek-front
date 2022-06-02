@@ -13,7 +13,8 @@
 
   onBeforeMount(async () => {
     let users = await APIHandler.get("users").then(response => response.json());
-    if(users){
+
+    if(users && !users.statusCode){
       usersData.value = users;
       usersData.value.forEach(prop => {
         if (prop.hasOwnProperty("role") && typeof prop.role === "object") {

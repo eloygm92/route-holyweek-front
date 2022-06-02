@@ -4,6 +4,8 @@ import Dashboard from "@/pages/Dashboard";
 import Users from "@/pages/Users";
 import Streets from "@/pages/Streets";
 import Street from "@/pages/Street";
+import Brotherhoods from "@/pages/Brotherhoods";
+import Brotherhood from "@/pages/Brotherhood";
 import {useCookies} from "vue3-cookies";
 
 const routes = [
@@ -13,6 +15,8 @@ const routes = [
     { path: '/users', name: 'Users', component: Users, meta: { requiresAuth: true }},
     { path: '/streets', name: 'Streets', component: Streets, meta: { requiresAuth: true }},
     { path: '/street', name: 'Street', component: Street, meta: { requiresAuth: true }, props: true },
+    { path: '/brotherhoods', name: 'Brotherhoods', component: Brotherhoods, meta: { requiresAuth: true }},
+    { path: '/brotherhood', name: 'Brotherhood', component: Brotherhood, meta: { requiresAuth: true }, props: true },
 ];
 
 const router = createRouter({
