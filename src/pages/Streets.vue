@@ -5,7 +5,7 @@
     :title="titleModal"
     @update:dialogVisible="updateVisible"
   >
-    <CreateStreet
+    <FormStreet
       @update:dialogVisible="updateVisible"
       @reload="reloadData"
     />
@@ -17,11 +17,7 @@
       :object_router="singleStreetProps"
       key="component"
   >
-    <el-row>
-      <el-col :span="4" :offset="20">
-        <button @click="createNew" class="border-2 p-1 ">Nueva</button>
-      </el-col>
-    </el-row>
+    <CreateButton @click="createNew" />
   </TableData>
   <div v-else class="flex justify-center">
     <SpinnerLoader/>
@@ -34,8 +30,9 @@
   import {onBeforeMount, ref} from "vue";
   import * as APIHandler from "../lib/APIHandler";
   import Modal from "../components/Modal";
-  import CreateStreet from "../components/CreateStreet";
+  import FormStreet from "../components/FormStreet";
   import SpinnerLoader from "../components/SpinnerLoader";
+  import CreateButton from "../components/CreateButton";
 
   const streetsProps = ref([]);
   const streetsData = ref([]);
@@ -46,7 +43,7 @@
   const singleStreetProps = ref({ name: 'Street', params: { Street: '' }});
 
   onBeforeMount(async () => {
-    fetchElements();
+    fetchStreetsElements();
   })
 
   const updateVisible = (value) => {
@@ -59,11 +56,11 @@
   }
 
   const reloadData = () => {
-    fetchElements();
-    component.value+=1;
+    fetchStreetsElements();
+    component.value++;
   }
 
-  const fetchElements = async () => {
+  const fetchStreetsElements = async () => {
     let streets = await APIHandler.get('streets').then(response => response.json());
     if(streets) {
       streetsData.value = streets;

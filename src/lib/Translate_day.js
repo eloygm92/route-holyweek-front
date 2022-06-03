@@ -14,8 +14,10 @@ const translate_day = (day) => {
         return 'Viernes'
     } else if(day === 'Saturday'){
         return 'Sábado'
-    } else if(day === 'Easter Sunday'){
+    } else if(day === 'Easter Sunday') {
         return 'Domingo de Resurrección'
+    } else {
+        return day;
     }
 }
 
