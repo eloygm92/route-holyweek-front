@@ -10,6 +10,14 @@ const translate_header = (header) => {
         return 'Fundación';
     } else if (header === 'procession_day') {
         return 'Día de la Procesión';
+    } else if (header === 'type') {
+        return 'Tipo';
+    } else if(header === 'createdAt') {
+        return 'Creado';
+    } else if(header === 'updatedAt') {
+        return 'Actualizado';
+    } else {
+        return header;
     }
 }
 

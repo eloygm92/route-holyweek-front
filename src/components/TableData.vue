@@ -19,7 +19,7 @@
 
 <script setup>
   import {useRoute, useRouter} from "vue-router";
-  import translate_day from "../lib/Translate_day";
+  //import translate_day from "../lib/TranslateDay";
   import translate_header from "../lib/TranslateHeaders";
 
   const router = useRouter();

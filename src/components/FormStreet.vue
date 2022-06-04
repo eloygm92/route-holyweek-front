@@ -30,10 +30,10 @@
       </el-col>
     </el-row>
     <el-divider/>
-    <div class="flex justify-end">
-      <el-button type="info" @click="resetForm" plain>Reset</el-button>
-      <el-button type="primary" @click="sendCreate">Crear</el-button>
-    </div>
+    <ButtonsForm
+        @reset="resetForm"
+        @create="sendCreate"
+    />
   </el-form>
   <div v-else class="flex justify-center">
     <SpinnerLoader/>
@@ -44,7 +44,8 @@
 
   import {onBeforeMount, reactive, ref} from "vue";
   import * as APIHandler from "../lib/APIHandler";
-  import SpinnerLoader from "./SpinnerLoader";
+  import SpinnerLoader from "../components/SpinnerLoader";
+  import ButtonsForm from "../components/ButtonsForm";
 
   const emit = defineEmits(['update:dialogVisible','reload'])
 
@@ -65,11 +66,7 @@
 
   const sendCreate = async () => {
     if(formData.type && formData.name && formData.geoJson) {
-      /*if(typeof formData.geoJson === 'string') {
-        formData.geoJson = JSON.parse(formData.geoJson);
-      }
-      console.log(formData);
-      console.log(typeof formData)*/
+
       await APIHandler.post('streets', {type: formData.type, name: formData.name, geoJson: JSON.parse(formData.geoJson)}).then(response => {
         if(response.status === 201) {
           emit('update:dialogVisible',false)

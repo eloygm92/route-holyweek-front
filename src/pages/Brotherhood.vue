@@ -32,7 +32,7 @@
 
   import {onBeforeMount,ref} from "vue";
   import * as APIHandler from "../lib/APIHandler"
-  import translate_day from "../lib/Translate_day";
+  import translate_day from "../lib/TranslateDay";
 
   const brotherhoodData = ref({});
 
