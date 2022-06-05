@@ -33,6 +33,8 @@ router.beforeEach((to, from, next) => {
     else {
         if (to.name === 'Street' && from.name !== 'Streets')
             next({name: 'Streets'})
+        else if (to.name === 'Brotherhood' && from.name !== 'Brotherhoods')
+            next({name: 'Brotherhoods'})
         else
             next()
     }

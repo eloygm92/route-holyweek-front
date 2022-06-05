@@ -3,7 +3,7 @@
     <el-main>
       <el-card class="box-card">
         <slot></slot>
-        <el-table :data="props.data_body"  class="flex">
+        <el-table :data="tableData"  class="flex">
           <el-table-column v-for="column in props.data_header" :key="column" :prop="column" :label="translate_header(column)" />
           <el-table-column label="Acciones">
             <template #default="scope">
@@ -18,12 +18,15 @@
 </template>
 
 <script setup>
+
+  import {ref} from "vue";
   import {useRoute, useRouter} from "vue-router";
-  //import translate_day from "../lib/TranslateDay";
+  import translate_content from "../lib/TranslateContent";
   import translate_header from "../lib/TranslateHeaders";
 
   const router = useRouter();
   const routename = useRoute();
+  const tableData = ref([]);
 
   const props = defineProps({
     data_header: {
@@ -39,6 +42,17 @@
       required: true
     }
   })
+
+  const translate_rows = () => {
+    for(const row of props.data_body) {
+      Object.keys(row).map((key,index) => {
+        row[key] = translate_content(row[key]);
+      })
+      tableData.value.push(row);
+    }
+  }
+
+  translate_rows();
 
   const read = (row) => {
     let route = props.object_router
