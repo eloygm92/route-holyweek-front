@@ -5,9 +5,12 @@ import router from "./router";
 import ElementPlus from 'element-plus';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {faPhone, faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faEllipsisVertical, faInfo, faPen} from "@fortawesome/free-solid-svg-icons";
 
 library.add(faPlus)
+library.add(faEllipsisVertical)
+library.add(faInfo)
+library.add(faPen)
 
 const app = createApp(App)
 

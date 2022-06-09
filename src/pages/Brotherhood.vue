@@ -26,7 +26,7 @@
 
         </div>
         <div v-else class="text-center">
-          <h3>No hay información disponible</h3>
+          <h3>No hay ningun recorrido disponible. ¿Desea <el-link type="primary" @click="openModal">añadir</el-link> uno?</h3>
         </div>
       </el-card>
       <div class="flex justify-center" v-else>
@@ -47,6 +47,7 @@
   const brotherhoodData = ref({});
   const toursData = ref([]);
   const loading = ref(true);
+  const new_tour_modal = ref(false);
 
   const props = defineProps({
     Brotherhood: {
@@ -69,6 +70,10 @@
     }
     loading.value = false;
   })
+
+  const openModal = () => {
+    new_tour_modal.value = true;
+  }
 </script>
 
 <style scoped>

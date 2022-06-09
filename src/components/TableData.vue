@@ -7,11 +7,20 @@
           <el-table-column v-for="column in props.data_header" :key="column" :prop="column" :label="translate_header(column)" />
           <el-table-column label="Acciones">
             <template #default="scope">
-              <el-button size="small" type="primary" @click="read(scope.row)">Detalle</el-button>
+              <el-dropdown trigger="click">
+                <el-button size="small" type="info" plain><font-awesome-icon icon="ellipsis-vertical" class="fa-3xs" /></el-button>
+                <template #dropdown>
+                  <el-dropdown-menu>
+                    <el-dropdown-item>
+                      <el-button size="small" type="info" @click="read(scope.row)" plain><font-awesome-icon icon="info" class="fa-3xs" /></el-button>
+                      <el-button size="small" type="info" @click="read(scope.row)" plain><font-awesome-icon icon="pen" class="-mx-1 fa-3xs" /></el-button>
+                    </el-dropdown-item>
+                  </el-dropdown-menu>
+                </template>
+              </el-dropdown>
             </template>
           </el-table-column>
         </el-table>
-
       </el-card>
     </el-main>
   </el-container>
