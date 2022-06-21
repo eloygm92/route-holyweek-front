@@ -31,8 +31,8 @@
     <el-main>
       <el-card class="box-card" v-if="!loading">
         <div v-if="!_.isEmpty(toursData)" class="card-body">
-          <el-tabs type="boder-card">
-            <el-tab-pane v-for="tour in toursData" :label="tour.year">{{ JSON.stringify(tour)}}</el-tab-pane>
+          <el-tabs type="border-card">
+            <el-tab-pane v-for="tour in toursData" :label="tour.year.toString()">{{ JSON.stringify(tour)}}</el-tab-pane>
           </el-tabs>
         </div>
         <div v-else class="text-center">
