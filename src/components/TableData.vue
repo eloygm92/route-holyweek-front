@@ -12,8 +12,10 @@
                 <template #dropdown>
                   <el-dropdown-menu>
                     <el-dropdown-item>
-                      <el-button size="small" type="info" @click="read(scope.row)" plain><font-awesome-icon icon="info" class="fa-3xs" /></el-button>
-                      <el-button size="small" type="info" @click="read(scope.row)" plain><font-awesome-icon icon="pen" class="-mx-1 fa-3xs" /></el-button>
+                      <el-button size="small" type="info" @click="read(scope.row)" plain><font-awesome-icon icon="info" class="fa-3xs pl-1.5" /><span class="ml-1 pr-1.5 pt-0.5">Detalles</span></el-button>
+                    </el-dropdown-item>
+                    <el-dropdown-item>
+                      <el-button size="small" type="info" @click="read(scope.row)" plain><font-awesome-icon icon="pen" class="-mx-1 fa-3xs" /><span class="ml-2 pt-0.5">Actualizar</span></el-button>
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </template>

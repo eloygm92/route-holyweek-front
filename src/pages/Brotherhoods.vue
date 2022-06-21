@@ -19,7 +19,7 @@
   >
     <CreateButton @click="createNew" />
   </TableData>
-  <div v-else class="flex justify-center">
+  <div v-else class="flex justify-center mt-10">
     <SpinnerLoader/>
   </div>
 </template>
@@ -30,6 +30,8 @@
   import {onBeforeMount, ref} from "vue";
   import * as APIHandler from "../lib/APIHandler";
   import FormBrotherhood from "../components/FormBrotherhood";
+  import SpinnerLoader from "../components/SpinnerLoader";
+  import CreateButton from "../components/CreateButton";
 
   const brotherhoodsProps = ref([]);
   const brotherhoodsData = ref([]);

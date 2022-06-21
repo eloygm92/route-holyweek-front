@@ -1,5 +1,13 @@
 <template>
-  <el-container v-if="brotherhoodData.name">
+  <Modal
+    v-if="new_tour_modal"
+    :dialog-visible="new_tour_modal"
+    title="Crear nuevo Recorrido"
+    @update:dialogVisible="updateVisible"
+  >
+    <CreateTour :brotherhood_id="brotherhoodData['_id']" @reload="reloadData"/>
+  </Modal>
+  <el-container v-if="brotherhoodData.name" key="">
     <el-aside class="pt-5 pl-4">
       <el-card class="box-card">
         <div class="pb-3">
@@ -23,13 +31,15 @@
     <el-main>
       <el-card class="box-card" v-if="!loading">
         <div v-if="!_.isEmpty(toursData)" class="card-body">
-
+          <el-tabs type="boder-card">
+            <el-tab-pane v-for="tour in toursData" :label="tour.year">{{ JSON.stringify(tour)}}</el-tab-pane>
+          </el-tabs>
         </div>
         <div v-else class="text-center">
           <h3>No hay ningun recorrido disponible. ¿Desea <el-link type="primary" @click="openModal">añadir</el-link> uno?</h3>
         </div>
       </el-card>
-      <div class="flex justify-center" v-else>
+      <div class="flex justify-center mt-10" v-else>
         <SpinnerLoader/>
       </div>
     </el-main>
@@ -43,11 +53,15 @@
   import translate_day from "../lib/TranslateDay";
   import SpinnerLoader from "../components/SpinnerLoader";
   import _ from "lodash";
+  import CreateTour from "../components/CreateTour";
+  import Modal from "../components/Modal";
+
 
   const brotherhoodData = ref({});
   const toursData = ref([]);
   const loading = ref(true);
   const new_tour_modal = ref(false);
+  const componentReload= ref(0);
 
   const props = defineProps({
     Brotherhood: {
@@ -63,17 +77,32 @@
       brotherhoodData.value = brotherhood;
     }
 
-    const tours = await APIHandler.get('tour/' + props.Brotherhood).then(response => response.json());
+    await fetchTours();
 
-    if(tours && !_.isEmpty(tours)) {
-      toursData.value.tours = tours;
-    }
     loading.value = false;
   })
 
   const openModal = () => {
     new_tour_modal.value = true;
   }
+
+  const updateVisible = (value) => {
+    new_tour_modal.value = value;
+  }
+
+  const reloadData = async () => {
+    toursData.value = [];
+    await fetchTours();
+  }
+
+  const fetchTours = async () => {
+    const tours = await APIHandler.get('tour/' + props.Brotherhood).then(response => response.json());
+
+    if(tours && !_.isEmpty(tours)) {
+      toursData.value = tours;
+    }
+  }
+
 </script>
 
 <style scoped>
