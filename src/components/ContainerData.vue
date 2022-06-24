@@ -1,6 +1,6 @@
 <template>
   <header v-if="route.name!=='Login'">
-    <Navbar />
+    <NavbarComponent />
   </header>
   <main>
     <slot></slot>
@@ -8,7 +8,7 @@
 </template>
 
 <script setup>
-import Navbar from "./Navbar";
+import NavbarComponent from "./NavbarComponent";
 import { useRoute } from "vue-router";
 
 const route = useRoute();

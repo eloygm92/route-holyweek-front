@@ -1,7 +1,6 @@
 <template>
   <l-map
       v-model="zoom"
-      v-model:zoom="zoom"
       style="height: 50vh"
       :center="mapData.geometry.coordinates[0][0]">
     <l-tile-layer

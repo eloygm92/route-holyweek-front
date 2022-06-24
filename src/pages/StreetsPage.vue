@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <ModalComponent
     v-if="dialogVisible"
     :dialog-visible="dialogVisible"
     :title="titleModal"
@@ -9,13 +9,13 @@
       @update:dialogVisible="updateVisible"
       @reload="reloadData"
     />
-  </Modal>
+  </ModalComponent>
   <TableData
       v-if="streetsProps.length>0 && streetsData.length>0"
       :data_header="streetsProps"
       :data_body="streetsData"
       :object_router="singleStreetProps"
-      key="component"
+      :key="component"
   >
     <CreateButton @click="createNew" />
   </TableData>
@@ -29,7 +29,7 @@
   import TableData from "../components/TableData";
   import {onBeforeMount, ref} from "vue";
   import * as APIHandler from "../lib/APIHandler";
-  import Modal from "../components/Modal";
+  import ModalComponent from "../components/ModalComponent";
   import FormStreet from "../components/FormStreet";
   import SpinnerLoader from "../components/SpinnerLoader";
   import CreateButton from "../components/CreateButton";
@@ -43,7 +43,7 @@
   const singleStreetProps = ref({ name: 'Street', params: { Street: '' }});
 
   onBeforeMount(async () => {
-    fetchStreetsElements();
+    await fetchStreetsElements();
   })
 
   const updateVisible = (value) => {
@@ -55,8 +55,8 @@
     dialogVisible.value = true;
   }
 
-  const reloadData = () => {
-    fetchStreetsElements();
+  const reloadData = async () => {
+    await fetchStreetsElements();
     component.value++;
   }
 

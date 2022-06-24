@@ -1,13 +1,13 @@
 <template>
-  <Modal
+  <ModalComponent
     v-if="new_tour_modal"
     :dialog-visible="new_tour_modal"
     title="Crear nuevo Recorrido"
     @update:dialogVisible="updateVisible"
   >
-    <CreateTour :brotherhood_id="brotherhoodData['_id']" @reload="reloadData"/>
-  </Modal>
-  <el-container v-if="brotherhoodData.name" key="">
+    <CreateTour :brotherhood_id="brotherhoodData['_id']" @reload="reloadData" @update:dialogVisible="updateVisible" />
+  </ModalComponent>
+  <el-container v-if="brotherhoodData.name" :key="componentReload">
     <el-aside class="pt-5 pl-4">
       <el-card class="box-card">
         <div class="pb-3">
@@ -31,8 +31,12 @@
     <el-main>
       <el-card class="box-card" v-if="!loading">
         <div v-if="!_.isEmpty(toursData)" class="card-body">
-          <el-tabs type="border-card">
-            <el-tab-pane v-for="tour in toursData" :label="tour.year.toString()">{{ JSON.stringify(tour)}}</el-tab-pane>
+          <el-tabs type="border-card" @tab-change="handleTabs">
+            <el-tab-pane v-for="tour in toursData" :key="tour" :label="tour.year.toString()" :lazy="true">
+              <TourShow :tour="tour" />
+            </el-tab-pane>
+            <el-tab-pane label="Nuevo">
+            </el-tab-pane>
           </el-tabs>
         </div>
         <div v-else class="text-center">
@@ -48,13 +52,14 @@
 
 <script setup>
 
-  import {onBeforeMount,ref} from "vue";
+  import {onBeforeMount, ref} from "vue";
   import * as APIHandler from "../lib/APIHandler"
   import translate_day from "../lib/TranslateDay";
   import SpinnerLoader from "../components/SpinnerLoader";
   import _ from "lodash";
   import CreateTour from "../components/CreateTour";
-  import Modal from "../components/Modal";
+  import ModalComponent from "../components/ModalComponent";
+  import TourShow from "../components/TourShow";
 
 
   const brotherhoodData = ref({});
@@ -93,6 +98,7 @@
   const reloadData = async () => {
     toursData.value = [];
     await fetchTours();
+    componentReload.value++;
   }
 
   const fetchTours = async () => {
@@ -100,6 +106,13 @@
 
     if(tours && !_.isEmpty(tours)) {
       toursData.value = tours;
+    }
+  }
+
+  const handleTabs = (tab) => {
+
+    if (tab === toursData.value.length) {
+      openModal();
     }
   }
 

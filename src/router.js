@@ -1,22 +1,22 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Login from "@/pages/Login";
-import Dashboard from "@/pages/Dashboard";
-import Users from "@/pages/Users";
-import Streets from "@/pages/Streets";
-import Street from "@/pages/Street";
-import Brotherhoods from "@/pages/Brotherhoods";
-import Brotherhood from "@/pages/Brotherhood";
+import LoginPage from "@/pages/LoginPage";
+import DashboardPage from "@/pages/DashboardPage";
+import UsersPage from "@/pages/UsersPage";
+import StreetsPage from "@/pages/StreetsPage";
+import StreetPage from "@/pages/StreetPage";
+import BrotherhoodsPage from "@/pages/BrotherhoodsPage";
+import BrotherhoodPage from "@/pages/BrotherhoodPage";
 import {useCookies} from "vue3-cookies";
 
 const routes = [
     { path: '/', redirect: '/login'},
-    { path: '/login', name: 'Login', component: Login , meta: { requiresAuth: false }},
-    { path: '/dashboard', name: 'Dashboard', component: Dashboard, meta: { requiresAuth: true }},
-    { path: '/users', name: 'Users', component: Users, meta: { requiresAuth: true }},
-    { path: '/streets', name: 'Streets', component: Streets, meta: { requiresAuth: true }},
-    { path: '/street', name: 'Street', component: Street, meta: { requiresAuth: true }, props: true },
-    { path: '/brotherhoods', name: 'Brotherhoods', component: Brotherhoods, meta: { requiresAuth: true }},
-    { path: '/brotherhood', name: 'Brotherhood', component: Brotherhood, meta: { requiresAuth: true }, props: true },
+    { path: '/login', name: 'Login', component: LoginPage , meta: { requiresAuth: false }},
+    { path: '/dashboard', name: 'Dashboard', component: DashboardPage, meta: { requiresAuth: true }},
+    { path: '/users', name: 'Users', component: UsersPage, meta: { requiresAuth: true }},
+    { path: '/streets', name: 'Streets', component: StreetsPage, meta: { requiresAuth: true }},
+    { path: '/street', name: 'Street', component: StreetPage, meta: { requiresAuth: true }, props: true },
+    { path: '/brotherhoods', name: 'Brotherhoods', component: BrotherhoodsPage, meta: { requiresAuth: true }},
+    { path: '/brotherhood', name: 'Brotherhood', component: BrotherhoodPage, meta: { requiresAuth: true }, props: true },
 ];
 
 const router = createRouter({

@@ -73,7 +73,7 @@
   import ButtonsForm from "./ButtonsForm";
   import SpinnerLoader from "../components/SpinnerLoader";
 
-  const emit = defineEmits([''])
+  const emit = defineEmits(['reload','update:dialogVisible']);
 
   const props = defineProps({
     brotherhood_id: {
@@ -109,10 +109,9 @@
   const sendCreate = async () => {
     const data = await APIHandler.post('tour', formData)
 
-    if(data.status === 200) {
+    if(data.status === 200 || data.status === 201) {
       resetForm();
-      formData.streets = [];
-      formData.year = undefined;
+      emit('update:dialogVisible',false);
       emit('reload');
     }
   }

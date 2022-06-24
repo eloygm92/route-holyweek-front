@@ -22,8 +22,7 @@
     </el-aside>
     <el-main>
       <el-card class="box-card py-10" >
-<!--        <Map :map-data="streetData.geoJson" />-->
-        <Map :map-data="JSON.parse(geoJson)" />
+        <MapStreet :map-data="JSON.parse(geoJson)" />
       </el-card>
     </el-main>
   </el-container>
@@ -33,7 +32,7 @@
 
   import {onBeforeMount, ref} from "vue";
   import * as APIHandler from "../lib/APIHandler";
-  import Map from "../components/Map";
+  import MapStreet from "../components/MapStreet";
 
   const streetData = ref({});
   const geoJson = ref({});

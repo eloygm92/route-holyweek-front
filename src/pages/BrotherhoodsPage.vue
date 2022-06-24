@@ -1,5 +1,5 @@
 <template>
-  <Modal
+  <ModalComponent
     v-if="dialogVisible"
     :dialog-visible="dialogVisible"
     :title="titleModal"
@@ -9,7 +9,7 @@
       @update:dialogVisible="updateVisible"
       @reload="reloadData"
     />
-  </Modal>
+  </ModalComponent>
   <TableData
     v-if="brotherhoodsProps.length>0 && brotherhoodsData.length>0"
     :data_header="brotherhoodsProps"

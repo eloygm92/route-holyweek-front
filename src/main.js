@@ -5,12 +5,10 @@ import router from "./router";
 import ElementPlus from 'element-plus';
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import {faPlus, faEllipsisVertical, faInfo, faPen} from "@fortawesome/free-solid-svg-icons";
+import {faPlus, faEllipsisVertical, faInfo, faPen, faChurch} from "@fortawesome/free-solid-svg-icons";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
 
-library.add(faPlus)
-library.add(faEllipsisVertical)
-library.add(faInfo)
-library.add(faPen)
+library.add(faPlus, faEllipsisVertical, faInfo, faPen, faClock, faChurch);
 
 const app = createApp(App)
 
