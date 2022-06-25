@@ -1,6 +1,6 @@
 <template>
   <l-map
-    v-model="zoom"
+    v-model:zoom="zoom"
     style="height: 50vh"
     :center="coordinates[0][0]"
   >
