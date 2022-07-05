@@ -8,6 +8,7 @@
     <CreateUser
       @update:dialogVisible="updateVisible"
       @reload="reloadData"
+      :edit-data="edit_data"
     />
   </ModalComponent>
   <TableData
@@ -16,10 +17,11 @@
     :data_body="usersData"
     :object_router="singleUserProps"
     :key="component"
+    @update="updateData($event)"
   >
     <CreateButton @click="createNew" />
   </TableData>
-  <div v-else class="flex justify-center">
+  <div v-else class="flex h-screen justify-center items-center -mt-10">
     <SpinnerLoader/>
   </div>
 </template>
@@ -39,6 +41,7 @@
   const dialogVisible = ref(false);
   const titleModal = ref('');
   const component = ref(0);
+  const edit_data = ref(undefined);
 
   const singleUserProps = ref({ name: 'User', params: { User: '' }});
 
@@ -52,6 +55,12 @@
 
   const createNew = () => {
     titleModal.value = "Crear usuario";
+    dialogVisible.value = true;
+  }
+
+  const updateData = (record) => {
+    titleModal.value = "Editar Usuario";
+    edit_data.value = record._id;
     dialogVisible.value = true;
   }
 

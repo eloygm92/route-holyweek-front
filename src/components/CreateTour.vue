@@ -1,44 +1,44 @@
 <template>
-  <el-form :model="formData" label-position="top" ref="form" v-if="streetList.length>0">
+  <el-form v-if="streetList.length>0 && render" :model="formData" label-position="top" ref="form" >
     <el-row :gutter="24">
       <el-col :span="24">
         <el-form-item value="year" label="Año">
-          <el-input-number v-model="formData.year" :min="2018" :max="yearMax" :step="1" placeholder="Semana santa año..." style="width: 100%"/>
+          <el-input-number v-model:value="formData.year" :min="2018" :max="yearMax" :step="1" placeholder="Semana santa año..." style="width: 100%"/>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row :gutter="24">
       <el-col :span="12">
         <el-form-item value="start" label="Salida">
-          <el-time-picker v-model="formData.start" placeholder="Hora de salida" format="HH:mm"/>
+          <el-time-picker v-model:value="formData.start" placeholder="Hora de salida" format="HH:mm"/>
         </el-form-item>
       </el-col>
       <el-col :span="12">
         <el-form-item value="end" label="Encierro">
-          <el-time-picker v-model="formData.end" placeholder="Hora de encierro" format="HH:mm"/>
+          <el-time-picker v-model:value="formData.end" placeholder="Hora de encierro" format="HH:mm"/>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row :gutter="24">
       <el-col :span="8">
         <el-form-item value="tribune" label="Tribuna">
-          <el-time-picker v-model="formData.tribune" placeholder="Paso por Tribuna" format="HH:mm"/>
+          <el-time-picker v-model:value="formData.tribune" placeholder="Paso por Tribuna" format="HH:mm"/>
         </el-form-item>
       </el-col>
       <el-col :span="8">
         <el-form-item value="grove" label="Alameda">
-          <el-time-picker v-model="formData.grove" placeholder="Paso por Alameda" format="HH:mm"/>
+          <el-time-picker v-model:value="formData.grove" placeholder="Paso por Alameda" format="HH:mm"/>
         </el-form-item>
       </el-col>
       <el-col :span="8">
         <el-form-item value="cathedral" label="Torre Sur Catedral">
-          <el-time-picker v-model="formData.cathedral" placeholder="Paso por Torre Sur de la Catedral" format="HH:mm"/>
+          <el-time-picker v-model:value="formData.cathedral" placeholder="Paso por Torre Sur de la Catedral" format="HH:mm"/>
         </el-form-item>
       </el-col>
     </el-row>
     <el-row :gutter="24">
       <el-col :span="24">
-        <div class="flex justify-center">
+        <div class="flex justify-center items-center">
           <el-form-item value="streets" label="Calles">
             <el-transfer
               v-model="formData.streets"
@@ -79,12 +79,14 @@
     brotherhood_id: {
       type: String,
       required: true
-    }
+    },
+    editData: Object,
   })
 
   const yearMax = ref(0);
   const streetList = ref([]);
   const form = ref(null);
+  const render = ref(false);
   const formData = reactive({
     year: undefined,
     streets: [],
@@ -99,11 +101,21 @@
   yearMax.value = dayjs().isBefore(dayjs('30-09','DD-MM'),'day') ? dayjs().year() : dayjs().year() + 1;
 
   onBeforeMount(async () => {
+    if(props.editData){
+      console.log('entro')
+      formData.year = props.editData.year;
+      formData.streets = props.editData.streets;
+      formData.start = props.editData.start;
+      formData.tribune = props.editData.tribune;
+      formData.grove = props.editData.grove;
+      formData.cathedral = props.editData.cathedral;
+      formData.end = props.editData.end;
+    }
     const dataStreet = await APIHandler.get('streets/tags').then(response => response.json());
     if(dataStreet) {
       streetList.value = dataStreet;
     }
-
+    render.value = true;
   })
 
   const sendCreate = async () => {

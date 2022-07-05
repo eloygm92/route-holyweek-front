@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="formData" label-position="top" ref="form">
+  <el-form :model="formData" label-position="top" ref="form" v-if="render">
     <el-row :gutter="24">
       <el-col :span="12">
         <el-form-item value="email" label="Correo electronico">
@@ -37,6 +37,9 @@
       @create="sendCreate"
     />
   </el-form>
+  <div v-else class="flex justify-center items-center -mt-10">
+    <SpinnerLoader/>
+  </div>
 </template>
 
 <script setup>
@@ -44,11 +47,18 @@
   import {onBeforeMount, reactive, ref} from "vue";
   import * as APIHandler from "../lib/APIHandler";
   import ButtonsForm from "./ButtonsForm";
+  import _ from "lodash";
+  import SpinnerLoader from "../components/SpinnerLoader";
 
   const emit = defineEmits(['reload','update:dialogVisible']);
 
+  const props = defineProps({
+    editData: String
+  });
+
   const form = ref(null);
   const optionsRole = ref([]);
+  const render = ref(false);
   const formData = reactive({
     username: undefined,
     email: undefined,
@@ -57,6 +67,17 @@
   })
 
   onBeforeMount(async () => {
+
+    if(!_.isEmpty(props.editData)) {
+      const data = await APIHandler.get('users/'+props.editData).then(response => response.json());
+      if(data) {
+        formData.username = data.username;
+        formData.email = data.email;
+        formData.password = data.password;
+        formData.role = data.role;
+      }
+    }
+
     const dataRole = await APIHandler.get('users/roles').then(response => response.json());
     if(dataRole) {
       for(const role of dataRole){
@@ -67,6 +88,7 @@
         optionsRole.value.push(roleLabel);
       }
     }
+    render.value=true;
   })
 
   const sendCreate = async () => {

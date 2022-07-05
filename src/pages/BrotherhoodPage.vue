@@ -2,10 +2,15 @@
   <ModalComponent
     v-if="new_tour_modal"
     :dialog-visible="new_tour_modal"
-    title="Crear nuevo Recorrido"
+    :title="titleModal"
     @update:dialogVisible="updateVisible"
   >
-    <CreateTour :brotherhood_id="brotherhoodData['_id']" @reload="reloadData" @update:dialogVisible="updateVisible" />
+    <CreateTour
+      :brotherhood_id="brotherhoodData['_id']"
+      :edit_data="edit_data"
+      @reload="reloadData"
+      @update:dialogVisible="updateVisible"
+    />
   </ModalComponent>
   <el-container v-if="brotherhoodData.name" :key="componentReload">
     <el-aside class="pt-5 pl-4">
@@ -32,8 +37,9 @@
       <el-card class="box-card" v-if="!loading">
         <div v-if="!_.isEmpty(toursData)" class="card-body">
           <el-tabs type="border-card" @tab-change="handleTabs">
-            <el-tab-pane v-for="tour in toursData" :key="tour" :label="tour.year.toString()" :lazy="true">
+            <el-tab-pane v-for="tour of toursData" :key="tour._id" :label="tour.year.toString()" :lazy="true">
               <TourShow :tour="tour" />
+              <el-button type="info" plain @click="editTour(tour)" class="mt-4">Editar</el-button>
             </el-tab-pane>
             <el-tab-pane label="Nuevo">
             </el-tab-pane>
@@ -66,7 +72,9 @@
   const toursData = ref([]);
   const loading = ref(true);
   const new_tour_modal = ref(false);
+  const titleModal = ref('');
   const componentReload= ref(0);
+  const edit_data = ref({});
 
   const props = defineProps({
     Brotherhood: {
@@ -88,6 +96,7 @@
   })
 
   const openModal = () => {
+    titleModal.value = 'Crear nuevo Recorrido';
     new_tour_modal.value = true;
   }
 
@@ -101,6 +110,15 @@
     componentReload.value++;
   }
 
+  const editTour = (tour) => {
+    titleModal.value = 'Editar Recorrido';
+    edit_data.value = tour;
+
+    console.log(edit_data.value);
+
+    new_tour_modal.value = true;
+  }
+
   const fetchTours = async () => {
     const tours = await APIHandler.get('tour/' + props.Brotherhood).then(response => response.json());
 
@@ -111,7 +129,7 @@
 
   const handleTabs = (tab) => {
 
-    if (tab === toursData.value.length) {
+    if (tab == toursData.value.length) {
       openModal();
     }
   }

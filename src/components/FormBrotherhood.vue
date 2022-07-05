@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="formData" v-if="optionsProcessionDay.length>0" label-position="top" ref="form">
+  <el-form :model="formData" v-if="optionsProcessionDay.length>0 && render" label-position="top" ref="form">
     <el-row :gutter="24">
       <el-col :span="8">
         <el-form-item value="foundation" label="Dia de Procesion">
@@ -37,7 +37,7 @@
       @create="sendCreate"
     />
   </el-form>
-  <div v-else class="flex justify-center">
+  <div v-else class="flex justify-center items-center mt-10">
     <SpinnerLoader/>
   </div>
 </template>
@@ -45,6 +45,7 @@
 <script setup>
 
   import {onBeforeMount, reactive, ref} from "vue";
+  import _ from "lodash";
   import * as APIHandler from "../lib/APIHandler";
   import translate_day from "../lib/TranslateDay";
   import SpinnerLoader from "../components/SpinnerLoader";
@@ -52,8 +53,13 @@
 
   const emit = defineEmits(['update:dialogVisible','reload']);
 
+  const props = defineProps({
+    editData: String
+  });
+
   const optionsProcessionDay = ref([]);
   const form = ref(null);
+  const render = ref(false);
   const formData = reactive({
     nick: undefined,
     name: undefined,
@@ -62,22 +68,44 @@
   });
 
   onBeforeMount(async () => {
+
+    if(!_.isEmpty(props.editData)) {
+      let data = await APIHandler.get('brotherhood/'+props.editData).then(response => response.json());
+      if(data) {
+        formData.nick = data.nick;
+        formData.name = data.name;
+        formData.foundation = data.foundation;
+        formData.procession_day = data.procession_day;
+      }
+    }
+
     let response = await APIHandler.get('brotherhood/procession_days').then(response => response.json());
     if(response) {
       optionsProcessionDay.value = response;
     }
+    render.value = true;
   })
 
   const sendCreate = async () => {
-    if(formData.nick && formData.name && formData.foundation && formData.procession_day) {
+    if(formData.nick && formData.name && formData.foundation && formData.procession_day ) {
       formData.foundation = parseInt(formData.foundation)
-      await APIHandler.post('brotherhood', formData).then(response => {
-        if(response.status === 201) {
-          emit('update:dialogVisible',false)
-          emit('reload',true);
-          resetForm();
-        }
-      });
+      if(_.isEmpty(props.editData)) {
+        await APIHandler.post('brotherhood', formData).then(response => {
+          if (response.status === 201) {
+            emit('update:dialogVisible', false)
+            emit('reload', true);
+            resetForm();
+          }
+        });
+      } else {
+        await APIHandler.patch('brotherhood/'+props.editData, formData).then(response => {
+          if (response.status === 201) {
+            emit('update:dialogVisible', false)
+            emit('reload', true);
+            resetForm();
+          }
+        });
+      }
     }
   }
 

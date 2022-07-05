@@ -15,7 +15,7 @@
                       <el-button size="small" type="info" @click="read(scope.row)" plain><font-awesome-icon icon="info" class="fa-3xs pl-1.5" /><span class="ml-1 pr-1.5 pt-0.5">Detalles</span></el-button>
                     </el-dropdown-item>
                     <el-dropdown-item>
-                      <el-button size="small" type="info" @click="read(scope.row)" plain><font-awesome-icon icon="pen" class="-mx-1 fa-3xs" /><span class="ml-2 pt-0.5">Actualizar</span></el-button>
+                      <el-button size="small" type="info" @click="$emit('update',scope.row)" plain><font-awesome-icon icon="pen" class="-mx-1 fa-3xs" /><span class="ml-2 pt-0.5">Actualizar</span></el-button>
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </template>
@@ -34,6 +34,8 @@
   import {useRoute, useRouter} from "vue-router";
   import translate_content from "../lib/TranslateContent";
   import translate_header from "../lib/TranslateHeaders";
+
+  const emit = defineEmits(['update']);
 
   const router = useRouter();
   const routename = useRoute();

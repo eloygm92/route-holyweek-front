@@ -8,6 +8,7 @@
     <FormBrotherhood
       @update:dialogVisible="updateVisible"
       @reload="reloadData"
+      :edit-data="edit_data"
     />
   </ModalComponent>
   <TableData
@@ -16,10 +17,11 @@
     :data_body="brotherhoodsData"
     :object_router="singleBrotherhoodProps"
     :key="component"
+    @update="updateData($event)"
   >
     <CreateButton @click="createNew" />
   </TableData>
-  <div v-else class="flex justify-center mt-10">
+  <div v-else class="flex h-screen justify-center items-center -mt-10">
     <SpinnerLoader/>
   </div>
 </template>
@@ -38,11 +40,12 @@
   const dialogVisible = ref(false);
   const titleModal = ref('');
   const component = ref(0);
+  const edit_data = ref(undefined);
 
   const singleBrotherhoodProps = ref({ name: 'Brotherhood', params: { Brotherhood: '' }});
 
   onBeforeMount(async () => {
-    fetchBrotherhoodsElements();
+    await fetchBrotherhoodsElements();
   })
 
   const createNew = () => {
@@ -50,12 +53,18 @@
     dialogVisible.value = true;
   }
 
+  const updateData = (record) => {
+    titleModal.value = "Editar Cofradía";
+    edit_data.value = record.nick;
+    dialogVisible.value = true;
+  }
+
   const updateVisible = (value) => {
     dialogVisible.value = value;
   }
 
-  const reloadData = () => {
-    fetchBrotherhoodsElements();
+  const reloadData = async () => {
+    await fetchBrotherhoodsElements();
     component.value++;
   }
 

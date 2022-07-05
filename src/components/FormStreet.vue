@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="formData" v-if="optionsTypeStreet.length>0" label-position="top" ref="form">
+  <el-form :model="formData" v-if="optionsTypeStreet.length>0 && render" label-position="top" ref="form">
     <el-row :gutter="24">
       <el-col :span="12">
         <el-form-item value="name" label="Tipo calle">
@@ -35,7 +35,7 @@
         @create="sendCreate"
     />
   </el-form>
-  <div v-else class="flex justify-center">
+  <div v-else class="flex justify-center items-center -mt-10">
     <SpinnerLoader/>
   </div>
 </template>
@@ -46,11 +46,17 @@
   import * as APIHandler from "../lib/APIHandler";
   import SpinnerLoader from "../components/SpinnerLoader";
   import ButtonsForm from "../components/ButtonsForm";
+  import _ from "lodash";
 
-  const emit = defineEmits(['update:dialogVisible','reload'])
+  const emit = defineEmits(['update:dialogVisible','reload']);
+
+  const props = defineProps({
+    editData: String
+  });
 
   const optionsTypeStreet = ref([]);
   const form = ref(null);
+  const render = ref(false);
   const formData = reactive({
     type: undefined,
     name: undefined,
@@ -58,10 +64,20 @@
   });
 
   onBeforeMount(async () => {
+    if(!_.isEmpty(props.editData)){
+      let data = await APIHandler.get('streets/'+props.editData).then(response => response.json());
+      if(data) {
+        formData.type = data.type;
+        formData.name = data.name;
+        formData.geoJson = JSON.stringify(data.geoJson);
+      }
+    }
+
     let response = await APIHandler.get('streets/types').then(response => response.json());
     if(response) {
       optionsTypeStreet.value = response;
     }
+    render.value=true;
   })
 
   const sendCreate = async () => {
