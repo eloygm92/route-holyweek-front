@@ -57,7 +57,9 @@
     loading.value = true;
     for (const street of props.tour.streets) {
       streetData.value.push(street.type + ' ' + street.name);
-      coordinates.value.push(await street.geoJson.geometry.coordinates[0].map(coor => coor.reverse() ));
+      coordinates.value.push(await street.geoJson.geometry.coordinates[0].map(coor => {
+        return coor[0].toString().includes('-4') ? coor.reverse() : coor;
+      }));
     }
     loading.value= false;
   });

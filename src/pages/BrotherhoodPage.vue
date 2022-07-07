@@ -7,7 +7,7 @@
   >
     <CreateTour
       :brotherhood_id="brotherhoodData['_id']"
-      :edit_data="edit_data"
+      :tour-data="edit_data"
       @reload="reloadData"
       @update:dialogVisible="updateVisible"
     />
@@ -34,7 +34,7 @@
       </el-card>
     </el-aside>
     <el-main>
-      <el-card class="box-card" v-if="!loading">
+      <el-card class="box-card" v-if="!loading" >
         <div v-if="!_.isEmpty(toursData)" class="card-body">
           <el-tabs type="border-card" @tab-change="handleTabs">
             <el-tab-pane v-for="tour of toursData" :key="tour._id" :label="tour.year.toString()" :lazy="true">
@@ -62,10 +62,10 @@
   import * as APIHandler from "../lib/APIHandler"
   import translate_day from "../lib/TranslateDay";
   import SpinnerLoader from "../components/SpinnerLoader";
-  import _ from "lodash";
   import CreateTour from "../components/CreateTour";
   import ModalComponent from "../components/ModalComponent";
   import TourShow from "../components/TourShow";
+  import _ from "lodash";
 
 
   const brotherhoodData = ref({});
@@ -74,7 +74,7 @@
   const new_tour_modal = ref(false);
   const titleModal = ref('');
   const componentReload= ref(0);
-  const edit_data = ref({});
+  const edit_data = ref(undefined);
 
   const props = defineProps({
     Brotherhood: {
@@ -113,8 +113,6 @@
   const editTour = (tour) => {
     titleModal.value = 'Editar Recorrido';
     edit_data.value = tour;
-
-    console.log(edit_data.value);
 
     new_tour_modal.value = true;
   }
