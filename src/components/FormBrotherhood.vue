@@ -1,33 +1,65 @@
 <template>
-  <el-form :model="formData" v-if="optionsProcessionDay.length>0 && render" label-position="top" ref="form">
+  <el-form
+    :model="formData"
+    v-if="optionsProcessionDay.length>0 && render"
+    label-position="top"
+    ref="form"
+  >
     <el-row :gutter="24">
       <el-col :span="8">
-        <el-form-item value="foundation" label="Dia de Procesion">
-          <el-select v-model="formData.procession_day" placeholder="Elige un día de Procesión">
+        <el-form-item
+          value="foundation"
+          label="Dia de Procesion"
+        >
+          <el-select
+            v-model="formData.procession_day"
+            placeholder="Elige un día de Procesión"
+          >
             <el-option
-                v-for="item of optionsProcessionDay"
-                :key="item.value"
-                :label="translate_day(item.value)"
-                :value="item.value"
+              v-for="item of optionsProcessionDay"
+              :key="item.value"
+              :label="translate_day(item.value)"
+              :value="item.value"
             />
           </el-select>
         </el-form-item>
       </el-col>
       <el-col :span="8">
-        <el-form-item value="nick" label="Nombre Coloquial">
-          <el-input v-model="formData.nick" placeholder="Apodo"/>
+        <el-form-item
+          value="nick"
+          label="Nombre Coloquial"
+        >
+          <el-input
+            v-model="formData.nick"
+            placeholder="Apodo"
+          />
         </el-form-item>
       </el-col>
       <el-col :span="8">
-        <el-form-item value="foundation" label="Año de Fundación">
-          <el-input v-model="formData.foundation" placeholder="Año de la fundación de la cofradía"/>
+        <el-form-item
+          value="foundation"
+          label="Año de Fundación"
+        >
+          <el-input
+            v-model="formData.foundation"
+            placeholder="Año de la fundación de la cofradía"
+          />
         </el-form-item>
       </el-col>
     </el-row>
     <el-row :gutter="24">
       <el-col :span="24">
-        <el-form-item value="name" label="Nombre completo Cofradía">
-          <el-input type="textarea" v-model="formData.name" :rows="10" placeholder="Real Cofradía de Nuestro Padre Jesús....." clearable />
+        <el-form-item
+          value="name"
+          label="Nombre completo Cofradía"
+        >
+          <el-input
+            type="textarea"
+            v-model="formData.name"
+            :rows="10"
+            placeholder="Real Cofradía de Nuestro Padre Jesús....."
+            clearable
+          />
         </el-form-item>
       </el-col>
     </el-row>
@@ -37,8 +69,11 @@
       @create="sendCreate"
     />
   </el-form>
-  <div v-else class="flex justify-center items-center mt-10">
-    <SpinnerLoader/>
+  <div
+    v-else
+    class="flex justify-center items-center mt-10"
+  >
+    <SpinnerLoader />
   </div>
 </template>
 
@@ -54,7 +89,10 @@
   const emit = defineEmits(['update:dialogVisible','reload']);
 
   const props = defineProps({
-    editData: String
+    editData: {
+      type: String,
+      default: undefined
+    }
   });
 
   const optionsProcessionDay = ref([]);

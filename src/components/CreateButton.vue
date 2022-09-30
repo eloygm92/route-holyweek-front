@@ -1,13 +1,25 @@
 <template>
   <el-row>
     <el-col>
-      <el-button @click="$emit('click')" type="info" plain><font-awesome-icon icon="plus" class="fa-3xs" /><span class="ml-1 pt-0.5">Create</span></el-button>
+      <el-button
+        @click="$emit('click')"
+        type="info"
+        plain
+      >
+        <font-awesome-icon
+          icon="plus"
+          class="fa-3xs"
+        />
+        <span class="ml-1 pt-0.5">
+          Create
+        </span>
+      </el-button>
     </el-col>
   </el-row>
 </template>
 
 <script setup>
-
+  defineEmits(['click'])
 </script>
 
 <style scoped>

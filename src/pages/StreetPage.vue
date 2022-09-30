@@ -2,27 +2,51 @@
   <el-container v-if="streetData.name">
     <el-aside class="pt-5 pl-4">
       <el-card class="box-card">
-        <div slot="header">
+        <template #header>
           <div class="card-header">
             <span>Detalles de la Calle</span>
           </div>
-        </div>
+        </template>
         <div class="card-body">
-          <el-form-item label="Tipo de via" class="my-3">
-            <el-input v-model="streetData.type" disabled></el-input>
+          <el-form-item
+            label="Tipo de via"
+            class="my-3"
+          >
+            <el-input
+              v-model="streetData.type"
+              disabled
+            />
           </el-form-item>
-          <el-form-item label="Nombre" class="my-3">
-            <el-input v-model="streetData.name" disabled></el-input>
+          <el-form-item
+            label="Nombre"
+            class="my-3"
+          >
+            <el-input
+              v-model="streetData.name"
+              disabled
+            />
           </el-form-item>
-          <el-form-item label="GeoJSON" class="my-3">
-            <el-input autosize type="textarea" v-model="geoJson" disabled></el-input>
+          <el-form-item
+            label="GeoJSON"
+            class="my-3"
+          >
+            <el-input
+              autosize
+              type="textarea"
+              v-model="geoJson"
+              disabled
+            />
           </el-form-item>
         </div>
       </el-card>
     </el-aside>
     <el-main>
-      <el-card class="box-card py-10" >
-        <MapStreet :map-data="JSON.parse(geoJson)" />
+      <el-card
+        class="box-card py-10"
+      >
+        <MapStreet
+          :map-data="JSON.parse(geoJson)"
+        />
       </el-card>
     </el-main>
   </el-container>

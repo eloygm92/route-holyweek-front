@@ -1,35 +1,79 @@
 <template>
   <div v-if="streetData.length > 0 && coordinates.length > 0 && !loading">
     <el-row :gutter="24">
-      <el-col :span="4" :offset="2">
-        <h3><font-awesome-icon :icon="['far','clock']" /><span class="font-bold ml-1">Salida</span></h3>
-        <span>{{transform_hour(tour.start)}}</span>
+      <el-col
+        :span="4"
+        :offset="2"
+      >
+        <h3>
+          <font-awesome-icon :icon="['far','clock']" />
+          <span class="font-bold ml-1">
+            Salida
+          </span>
+        </h3>
+        <span>
+          {{ transform_hour(tour.start) }}
+        </span>
       </el-col>
       <el-col :span="4">
-        <h3><font-awesome-icon :icon="['far','clock']" /><span class="font-bold ml-1">Tribuna</span></h3>
-        <span>{{transform_hour(tour.tribune)}}</span>
+        <h3>
+          <font-awesome-icon :icon="['far','clock']" />
+          <span class="font-bold ml-1">
+            Tribuna
+          </span>
+        </h3>
+        <span>
+          {{ transform_hour(tour.tribune) }}
+        </span>
       </el-col>
       <el-col :span="4">
-        <h3><font-awesome-icon :icon="['far','clock']" /><span class="font-bold ml-1">Alameda</span></h3>
-        <span>{{transform_hour(tour.grove)}}</span>
+        <h3>
+          <font-awesome-icon :icon="['far','clock']" />
+          <span class="font-bold ml-1">
+            Alameda
+          </span>
+        </h3>
+        <span>
+          {{ transform_hour(tour.grove) }}
+        </span>
       </el-col>
       <el-col :span="4">
-        <h3><font-awesome-icon :icon="['far','clock']" /><span class="font-bold ml-1">Catedral</span></h3>
-        <span>{{transform_hour(tour.cathedral)}}</span>
+        <h3>
+          <font-awesome-icon :icon="['far','clock']" />
+          <span class="font-bold ml-1">
+            Catedral
+          </span>
+        </h3>
+        <span>
+          {{ transform_hour(tour.cathedral) }}
+        </span>
       </el-col>
       <el-col :span="4">
-        <h3><font-awesome-icon :icon="['far','clock']" /><span class="font-bold ml-1">Encierro</span></h3>
-        <span>{{transform_hour(tour.end)}}</span>
+        <h3>
+          <font-awesome-icon :icon="['far','clock']" />
+          <span class="font-bold ml-1">
+            Encierro
+          </span>
+        </h3>
+        <span>
+          {{ transform_hour(tour.end) }}
+        </span>
       </el-col>
     </el-row>
     <el-row class="mt-2">
       <el-col :span="6">
-        <h3 class="font-bold">Calle</h3>
-        <span>{{streetData.join(', ')}}</span>
+        <h3 class="font-bold">
+          Calle
+        </h3>
+        <span>
+          {{ streetData.join(', ') }}
+        </span>
       </el-col>
     </el-row>
     <el-row class="mt-2">
-      <h3 class="font-bold mb-2">Recorrido sobre el mapa</h3>
+      <h3 class="font-bold mb-2">
+        Recorrido sobre el mapa
+      </h3>
       <MapTour :coordinates="coordinates" />
     </el-row>
   </div>

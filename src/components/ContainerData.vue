@@ -3,7 +3,7 @@
     <NavbarComponent />
   </header>
   <main>
-    <slot></slot>
+    <slot />
   </main>
 </template>
 

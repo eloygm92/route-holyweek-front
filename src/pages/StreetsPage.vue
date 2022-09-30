@@ -3,26 +3,29 @@
     v-if="dialogVisible"
     :dialog-visible="dialogVisible"
     :title="titleModal"
-    @update:dialogVisible="updateVisible"
+    @update:dialog-visible="updateVisible"
   >
     <FormStreet
-      @update:dialogVisible="updateVisible"
+      @update:dialog-visible="updateVisible"
       @reload="reloadData"
       :edit-data="edit_data"
     />
   </ModalComponent>
   <TableData
     v-if="streetsProps.length>0 && streetsData.length>0"
-    :data_header="streetsProps"
-    :data_body="streetsData"
-    :object_router="singleStreetProps"
+    :data-header="streetsProps"
+    :data-body="streetsData"
+    :object-router="singleStreetProps"
     :key="component"
     @update="updateData($event)"
   >
     <CreateButton @click="createNew" />
   </TableData>
-  <div v-else class="flex h-screen justify-center items-center -mt-10">
-    <SpinnerLoader/>
+  <div
+    v-else
+    class="flex h-screen justify-center items-center -mt-10"
+  >
+    <SpinnerLoader />
   </div>
 </template>
 

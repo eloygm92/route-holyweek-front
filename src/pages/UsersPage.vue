@@ -3,26 +3,29 @@
     v-if="dialogVisible"
     :dialog-visible="dialogVisible"
     :title="titleModal"
-    @update:dialogVisible="updateVisible"
+    @update:dialog-visible="updateVisible"
   >
     <CreateUser
-      @update:dialogVisible="updateVisible"
+      @update:dialog-visible="updateVisible"
       @reload="reloadData"
       :edit-data="edit_data"
     />
   </ModalComponent>
   <TableData
     v-if="usersProps.length>0 && usersData.length>0"
-    :data_header="usersProps"
-    :data_body="usersData"
-    :object_router="singleUserProps"
+    :data-header="usersProps"
+    :data-body="usersData"
+    :object-router="singleUserProps"
     :key="component"
     @update="updateData($event)"
   >
     <CreateButton @click="createNew" />
   </TableData>
-  <div v-else class="flex h-screen justify-center items-center -mt-10">
-    <SpinnerLoader/>
+  <div
+    v-else
+    class="flex h-screen justify-center items-center -mt-10"
+  >
+    <SpinnerLoader />
   </div>
 </template>
 
@@ -75,7 +78,7 @@
     if(users && !users.statusCode){
       usersData.value = users;
       usersData.value.forEach(prop => {
-        if (prop.hasOwnProperty("role") && typeof prop.role === "object") {
+        if (typeof prop.role === "object" && Object.hasOwn(prop,'role')) {
           prop.role = prop.role.name;
         }
       })

@@ -3,26 +3,29 @@
     v-if="dialogVisible"
     :dialog-visible="dialogVisible"
     :title="titleModal"
-    @update:dialogVisible="updateVisible"
+    @update:dialog-visible="updateVisible"
   >
     <FormBrotherhood
-      @update:dialogVisible="updateVisible"
+      @update:dialog-visible="updateVisible"
       @reload="reloadData"
       :edit-data="edit_data"
     />
   </ModalComponent>
   <TableData
     v-if="brotherhoodsProps.length>0 && brotherhoodsData.length>0"
-    :data_header="brotherhoodsProps"
-    :data_body="brotherhoodsData"
-    :object_router="singleBrotherhoodProps"
+    :data-header="brotherhoodsProps"
+    :data-body="brotherhoodsData"
+    :object-router="singleBrotherhoodProps"
     :key="component"
     @update="updateData($event)"
   >
     <CreateButton @click="createNew" />
   </TableData>
-  <div v-else class="flex h-screen justify-center items-center -mt-10">
-    <SpinnerLoader/>
+  <div
+    v-else
+    class="flex h-screen justify-center items-center -mt-10"
+  >
+    <SpinnerLoader />
   </div>
 </template>
 

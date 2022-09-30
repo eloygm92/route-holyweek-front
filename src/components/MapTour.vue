@@ -4,13 +4,13 @@
     style="height: 50vh"
     :center="coordinates[0][0]"
   >
-    <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+    <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
     <l-polygon
       :lat-lngs="coordinates"
       color="#41b782"
       :fill="true"
-      :fillOpacity="0.5"
-      fillColor="#41b782"
+      :fill-opacity="0.5"
+      fill-color="#41b782"
     />
   </l-map>
 </template>
@@ -21,7 +21,7 @@
   import { LMap, LTileLayer,LPolygon } from "@vue-leaflet/vue-leaflet";
   import {ref} from "vue";
 
-  const props = defineProps({
+  defineProps({
     coordinates: {
       type: Array,
       required: true
