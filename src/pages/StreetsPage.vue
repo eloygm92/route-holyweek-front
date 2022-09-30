@@ -46,7 +46,7 @@
   const component = ref(0);
   const edit_data = ref(undefined);
 
-  const singleStreetProps = ref({ name: 'Street', params: { Street: '' }});
+  const singleStreetProps = ref({ name: 'Street', params: { street: '' }});
 
   onBeforeMount(async () => {
     await fetchStreetsElements();

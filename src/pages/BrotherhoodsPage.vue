@@ -8,7 +8,7 @@
     <FormBrotherhood
       @update:dialog-visible="updateVisible"
       @reload="reloadData"
-      :edit-data="edit_data"
+      :edit-data="editData"
     />
   </ModalComponent>
   <TableData
@@ -43,9 +43,9 @@
   const dialogVisible = ref(false);
   const titleModal = ref('');
   const component = ref(0);
-  const edit_data = ref(undefined);
+  const editData = ref(undefined);
 
-  const singleBrotherhoodProps = ref({ name: 'Brotherhood', params: { Brotherhood: '' }});
+  const singleBrotherhoodProps = ref({ name: 'Brotherhood', params: { brotherhood: '' }});
 
   onBeforeMount(async () => {
     await fetchBrotherhoodsElements();
@@ -58,7 +58,7 @@
 
   const updateData = (record) => {
     titleModal.value = "Editar Cofradía";
-    edit_data.value = record.nick;
+    editData.value = record.nick;
     dialogVisible.value = true;
   }
 

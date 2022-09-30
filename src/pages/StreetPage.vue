@@ -62,14 +62,14 @@
   const geoJson = ref({});
 
   const props = defineProps({
-    Street: {
+    street: {
       type: String,
       required: true
     },
   })
 
   onBeforeMount(async () => {
-    const street = await APIHandler.get('streets/' + props.Street).then(response => response.json());
+    const street = await APIHandler.get('streets/' + props.street).then(response => response.json());
     if(street) {
       geoJson.value = JSON.stringify(street.geoJson)
       streetData.value = street;

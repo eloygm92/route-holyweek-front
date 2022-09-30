@@ -129,14 +129,14 @@
   const edit_data = ref(undefined);
 
   const props = defineProps({
-    Brotherhood: {
+    brotherhood: {
       type: String,
       required: true
     },
   })
 
   onBeforeMount(async () => {
-    const brotherhood = await APIHandler.get('brotherhood/' + props.Brotherhood).then(response => response.json());
+    const brotherhood = await APIHandler.get('brotherhood/' + props.brotherhood).then(response => response.json());
 
     if(brotherhood) {
       brotherhoodData.value = brotherhood;
@@ -170,7 +170,7 @@
   }
 
   const fetchTours = async () => {
-    const tours = await APIHandler.get('tour/' + props.Brotherhood).then(response => response.json());
+    const tours = await APIHandler.get('tour/' + props.brotherhood).then(response => response.json());
 
     if(tours && !_.isEmpty(tours)) {
       toursData.value = tours;

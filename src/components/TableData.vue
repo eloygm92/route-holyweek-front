@@ -113,7 +113,7 @@
   const read = (row) => {
     let route = props.objectRouter
 
-    route.params[route.name] = routename.path==='/brotherhoods' ? row.nick : row.name;
+    route.params[route.name.toLowerCase()] = routename.path==='/brotherhoods' ? row.nick : row.name;
     //{ name: 'street', params: { street_id: row.id }
     router.push(route)
   }
