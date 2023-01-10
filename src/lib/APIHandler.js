@@ -25,3 +25,15 @@ export async function post(chunk, data) {
         body: JSON.stringify(data)
     })
 }
+
+export async function patch(chunk, data) {
+    return await fetch(import.meta.env.VITE_API_URL + chunk, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + cookies.get('jwt_token')
+        },
+        body: JSON.stringify(data)
+    })
+}

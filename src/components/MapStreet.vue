@@ -1,18 +1,18 @@
 <template>
   <l-map
-      v-model="zoom"
-      style="height: 50vh"
-      :center="mapData.geometry.coordinates[0][0]">
-    <l-tile-layer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"/>
+    v-model:zoom="zoom"
+    style="height: 50vh"
+    :center="mapData.geometry.coordinates[0][0]"
+  >
+    <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
     <l-polygon
       :lat-lngs="coordinates"
       color="#41b782"
       :fill="true"
-      :fillOpacity="0.5"
-      fillColor="#41b782"/>
+      :fill-opacity="0.5"
+      fill-color="#41b782"
+    />
   </l-map>
-
 </template>
 
 <script setup>

@@ -3,24 +3,29 @@
     v-if="dialogVisible"
     :dialog-visible="dialogVisible"
     :title="titleModal"
-    @update:dialogVisible="updateVisible"
+    @update:dialog-visible="updateVisible"
   >
     <FormBrotherhood
-      @update:dialogVisible="updateVisible"
+      @update:dialog-visible="updateVisible"
       @reload="reloadData"
+      :edit-data="editData"
     />
   </ModalComponent>
   <TableData
     v-if="brotherhoodsProps.length>0 && brotherhoodsData.length>0"
-    :data_header="brotherhoodsProps"
-    :data_body="brotherhoodsData"
-    :object_router="singleBrotherhoodProps"
+    :data-header="brotherhoodsProps"
+    :data-body="brotherhoodsData"
+    :object-router="singleBrotherhoodProps"
     :key="component"
+    @update="updateData($event)"
   >
     <CreateButton @click="createNew" />
   </TableData>
-  <div v-else class="flex justify-center mt-10">
-    <SpinnerLoader/>
+  <div
+    v-else
+    class="flex h-screen justify-center items-center -mt-10"
+  >
+    <SpinnerLoader />
   </div>
 </template>
 
@@ -38,11 +43,12 @@
   const dialogVisible = ref(false);
   const titleModal = ref('');
   const component = ref(0);
+  const editData = ref(undefined);
 
-  const singleBrotherhoodProps = ref({ name: 'Brotherhood', params: { Brotherhood: '' }});
+  const singleBrotherhoodProps = ref({ name: 'Brotherhood', params: { brotherhood: '' }});
 
   onBeforeMount(async () => {
-    fetchBrotherhoodsElements();
+    await fetchBrotherhoodsElements();
   })
 
   const createNew = () => {
@@ -50,12 +56,18 @@
     dialogVisible.value = true;
   }
 
+  const updateData = (record) => {
+    titleModal.value = "Editar Cofradía";
+    editData.value = record.nick;
+    dialogVisible.value = true;
+  }
+
   const updateVisible = (value) => {
     dialogVisible.value = value;
   }
 
-  const reloadData = () => {
-    fetchBrotherhoodsElements();
+  const reloadData = async () => {
+    await fetchBrotherhoodsElements();
     component.value++;
   }
 

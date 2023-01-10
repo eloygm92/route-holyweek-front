@@ -1,19 +1,19 @@
 <template>
   <el-dialog
-      v-model="dialogVisible"
-      width="50%"
-      destroy-on-close
-      center
-      @closed="closedModal"
-      @update:dialogVisible="$emit('update:dialogVisible', $event)"
+    v-model="dialogVisible"
+    width="50%"
+    destroy-on-close
+    center
+    @closed="closedModal"
+    @update:dialog-visible="$emit('update:dialogVisible', $event)"
   >
-    <slot></slot>
+    <slot />
   </el-dialog>
 </template>
 
 <script setup>
 
-  const props = defineProps({
+  defineProps({
     dialogVisible: {
       type: Boolean,
       default: false
