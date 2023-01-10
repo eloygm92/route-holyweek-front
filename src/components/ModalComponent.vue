@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    v-model="dialogVisible"
+    v-model="visible"
     width="50%"
     destroy-on-close
     center
@@ -12,8 +12,9 @@
 </template>
 
 <script setup>
+  import {ref} from 'vue';
 
-  defineProps({
+  const props = defineProps({
     dialogVisible: {
       type: Boolean,
       default: false
@@ -21,7 +22,7 @@
   })
 
   const emit = defineEmits(['update:dialogVisible'])
-
+  const visible = ref(props.dialogVisible)
   const closedModal = () => {
     emit('update:dialogVisible',false)
   }
