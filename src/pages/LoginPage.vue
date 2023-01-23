@@ -10,7 +10,12 @@
             Inicia sesión en la plataforma
           </h3>
           <div>
-            <span v-if="error" class="text-red-600 text-xs">La combinación usuario/contraseña no es correcta</span>
+            <span
+              v-if="error"
+              class="text-red-600 text-xs"
+            >
+              La combinación usuario/contraseña no es correcta
+            </span>
             <label
               for="username"
               class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
@@ -46,7 +51,7 @@
               required=""
             >
           </div>
-<!--          <div class="flex items-start">
+          <!--<div class="flex items-start">
             <div class="flex items-start">
               <div class="flex items-center h-5">
                 <input
