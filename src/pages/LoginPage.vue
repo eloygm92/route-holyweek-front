@@ -7,9 +7,10 @@
           @submit.prevent
         >
           <h3 class="text-xl font-medium text-gray-900 dark:text-white">
-            Sign in to our platform
+            Inicia sesión en la plataforma
           </h3>
           <div>
+            <span v-if="error" class="text-red-600 text-xs">La combinación usuario/contraseña no es correcta</span>
             <label
               for="username"
               class="text-sm font-medium text-gray-900 block mb-2 dark:text-gray-300"
@@ -17,12 +18,13 @@
               Introduce tu nombre de usuario
             </label>
             <input
+              :key="reload"
               type="username"
               name="username"
               v-model="username"
               id="username"
               placeholder="usuario"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+              :class="inputClass"
               required=""
             >
           </div>
@@ -34,16 +36,17 @@
               Contraseña
             </label>
             <input
+              :key="reload"
               type="password"
               name="password"
               v-model="password"
               id="password"
               placeholder="••••••••"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+              :class="inputClass"
               required=""
             >
           </div>
-          <div class="flex items-start">
+<!--          <div class="flex items-start">
             <div class="flex items-start">
               <div class="flex items-center h-5">
                 <input
@@ -62,7 +65,7 @@
                 </label>
               </div>
             </div>
-          </div>
+          </div>-->
           <button
             type="submit"
             @click="loginButton()"
@@ -77,7 +80,7 @@
 </template>
 
 <script setup>
-  import { ref } from 'vue';
+  import { ref,watch } from 'vue';
   import { useCookies } from 'vue3-cookies'
   import { useRouter } from 'vue-router'
 
@@ -87,9 +90,11 @@
 
   let password = ref('');
   let username = ref('');
+  let error = ref(false);
+  const reload = ref(0);
+  const inputClass = ref('bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white');
 
   let loginButton = () => {
-    // TODO comportamiento de boton para login
 
     fetch(import.meta.env.VITE_API_URL + 'auth/login/', {
       method: 'POST',
@@ -103,19 +108,73 @@
     })
       .then(response => {
         if (response.status === 201) return response.json()
+        else if(response.status===401) throw new ErrorEvent('loginError')
       })
       .then(data => {
           cookies.set('jwt_token', data.access_token, "12h");
         }
-      ).finally(() => {
+      )
+      .catch(e => {
+        if (e instanceof ErrorEvent) {
+          error.value = true;
+          reload.value += 1;
+        }
+      })
+      .finally(() => {
         if(cookies.get('jwt_token')) {
           router.push({ name: "Dashboard"});
         }
     })
   }
 
+  watch(() => error.value, (newValue) => {
+    if(newValue) {
+      inputClass.value += ' border-red-600 bounce';
+    }
+  })
+
 </script>
 
 <style scoped>
+.bounce {
+  outline: 0;
+  animation-name: bounce;
+  animation-duration: .5s;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+  37% {
+    transform: translateX(5px);
+    timing-function: ease-out;
+  }
+  55% {
+    transform: translateX(-5px);
+    timing-function: ease-in;
+  }
+  73% {
+    transform: translateX(4px);
+    timing-function: ease-out;
+  }
+  82% {
+    transform: translateX(-4px);
+    timing-function: ease-in;
+  }
+  91% {
+    transform: translateX(2px);
+    timing-function: ease-out;
+  }
+  96% {
+    transform: translateX(-2px);
+    timing-function: ease-in;
+  }
+  100% {
+    transform: translateX(0px);
+    timing-function: ease-in;
+  }
+}
 
 </style>
