@@ -45,6 +45,7 @@
           label="Nombre de usuario"
         >
           <el-input
+            :disabled="!_.isEmpty(editData)"
             v-model="formData.username"
             placeholder="Introduzca un nombre de usuario"
           />
@@ -57,8 +58,9 @@
         >
           <el-input
             v-model="formData.password"
+            :disabled="!_.isEmpty(editData)"
             type="password"
-            placeholder="Introduzca una contraseña"
+            :placeholder="!_.isEmpty(editData) ? '' : 'Introduzca una contraseña'"
             :show-password="true"
           />
         </el-form-item>
@@ -104,18 +106,9 @@
     password: undefined,
     role: undefined,
   })
+  const initialData = reactive({});
 
   onBeforeMount(async () => {
-
-    if(!_.isEmpty(props.editData)) {
-      const data = await APIHandler.get('users/'+props.editData).then(response => response.json());
-      if(data) {
-        formData.username = data.username;
-        formData.email = data.email;
-        formData.password = data.password;
-        formData.role = data.role;
-      }
-    }
 
     const dataRole = await APIHandler.get('users/roles').then(response => response.json());
     if(dataRole) {
@@ -127,11 +120,26 @@
         optionsRole.value.push(roleLabel);
       }
     }
+
+    if(!_.isEmpty(props.editData)) {
+      const data = await APIHandler.get('users/'+props.editData).then(response => response.json());
+      if(data) {
+        formData.username = data.username;
+        formData.email = data.email;
+        formData.role = data.role._id;
+        initialData.value = data;
+      }
+    }
     render.value=true;
   })
 
   const sendCreate = async () => {
-    const data = await APIHandler.post('users', formData)
+    let data;
+    if(_.isEmpty(props.editData)){
+      data = await APIHandler.post('users', formData)
+    } else {
+      data = await APIHandler.patch('users/'+formData.username, formData)
+    }
 
     if(data.status === 200 || data.status === 201) {
       resetForm();
