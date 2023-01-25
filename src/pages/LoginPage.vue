@@ -117,6 +117,7 @@
       })
       .then(data => {
           cookies.set('jwt_token', data.access_token, "12h");
+          localStorage.setItem('userData', JSON.stringify(data.user));
         }
       )
       .catch(e => {

@@ -9,6 +9,7 @@
           Dashboard
         </router-link>
         <router-link
+          v-if="userData._doc.role && userData._doc.role.name === 'Admin'"
           to="/users"
           class="flex text-gray-600 hover:text-blue-500 cursor-pointer transition-colors duration-300"
         >
@@ -47,17 +48,19 @@
 
 <script setup>
 
-  import {ref, watch} from "vue";
-  import {useRouter} from "vue-router";
+  import { reactive, ref, watch} from "vue";
+  import { useRouter } from "vue-router";
   import { useCookies } from 'vue3-cookies'
 
   const {cookies} = useCookies();
   const router = useRouter();
 
   let logoutTick = ref(false);
+  const userData = reactive(localStorage.getItem('userData') ? JSON.parse(localStorage.getItem('userData')) : {});
 
   let logout = () => {
     cookies.remove('jwt_token');
+    localStorage.clear();
     logoutTick.value=true;
   }
 
@@ -65,7 +68,7 @@
     if (!cookies.get('jwt_token')) {
       router.push('/login');
     }
-})
+  })
 
 </script>
 
