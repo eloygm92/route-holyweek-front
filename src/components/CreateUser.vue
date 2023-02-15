@@ -26,7 +26,6 @@
           <el-select
             v-model="formData.role"
             placeholder="Selecciona un rol"
-            style="width: 100%"
           >
             <el-option
               v-for="item in optionsRole"
@@ -158,5 +157,7 @@
 </script>
 
 <style scoped>
-
+.el-select {
+  width: 100%;
+}
 </style>

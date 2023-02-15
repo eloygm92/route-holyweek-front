@@ -17,7 +17,6 @@
             :max="yearMax"
             :step="1"
             placeholder="Semana santa año..."
-            style="width: 100%"
           />
         </el-form-item>
       </el-col>
@@ -209,5 +208,7 @@
 </script>
 
 <style scoped>
-
+.el-select {
+  width: 100%;
+}
 </style>

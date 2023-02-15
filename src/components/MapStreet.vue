@@ -1,7 +1,6 @@
 <template>
   <l-map
     v-model:zoom="zoom"
-    style="height: 50vh"
     :center="mapData.geometry.coordinates[0][0]"
   >
     <l-tile-layer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
@@ -40,4 +39,7 @@
 </script>
 
 <style scoped>
+.leaflet-container {
+  height: 50vh !important;
+}
 </style>
