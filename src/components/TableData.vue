@@ -101,6 +101,7 @@
 
   const translate_rows = () => {
     for(const row of props.dataBody) {
+      // eslint-disable-next-line no-unused-vars
       Object.keys(row).map((key,index) => {
         row[key] = translate_content(row[key]);
       })
