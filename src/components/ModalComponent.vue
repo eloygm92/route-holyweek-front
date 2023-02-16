@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     v-model="visible"
-    width="50%"
+    width="35%"
     destroy-on-close
     center
     @closed="closedModal"
