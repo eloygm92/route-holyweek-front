@@ -17,12 +17,16 @@
             :max="yearMax"
             :step="1"
             placeholder="Semana santa año..."
+            class="ageInput"
           />
         </el-form-item>
       </el-col>
     </el-row>
     <el-row :gutter="24">
-      <el-col :span="12">
+      <el-col
+        :span="10"
+        :offset="2"
+      >
         <el-form-item
           value="start"
           label="Salida"
@@ -34,7 +38,10 @@
           />
         </el-form-item>
       </el-col>
-      <el-col :span="12">
+      <el-col
+        :span="10"
+        :offset="1"
+      >
         <el-form-item
           value="end"
           label="Encierro"
@@ -208,7 +215,7 @@
 </script>
 
 <style scoped>
-.el-select {
+.ageInput {
   width: 100%;
 }
 </style>
