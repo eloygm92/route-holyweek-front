@@ -53,13 +53,16 @@
         class="box-card"
         v-if="!loading"
       >
+        <CreateButton
+            @click="openModal"
+            class="mb-2"
+        />
         <div
           v-if="!_.isEmpty(toursData)"
           class="card-body"
         >
           <el-tabs
             type="border-card"
-            @tab-change="handleTabs"
           >
             <el-tab-pane
               v-for="tour of toursData"
@@ -79,7 +82,6 @@
                 Editar
               </el-button>
             </el-tab-pane>
-            <el-tab-pane label="Nuevo" />
           </el-tabs>
         </div>
         <div
@@ -87,14 +89,7 @@
           class="text-center"
         >
           <h3>
-            No hay ningun recorrido disponible. ¿Desea
-            <el-link
-              type="primary"
-              @click="openModal"
-            >
-              añadir
-            </el-link>
-            uno?
+            No hay ningun recorrido disponible.
           </h3>
         </div>
       </el-card>
@@ -118,6 +113,7 @@
   import ModalComponent from "../components/ModalComponent";
   import TourShow from "../components/TourShow";
   import _ from "lodash";
+  import CreateButton from "@/components/CreateButton.vue";
 
 
   const brotherhoodData = ref({});
@@ -177,12 +173,12 @@
     }
   }
 
-  const handleTabs = (tab) => {
+  /*const handleTabs = (tab) => {
 
     if (tab == toursData.value.length) {
       openModal();
     }
-  }
+  }*/
 
 </script>
 
